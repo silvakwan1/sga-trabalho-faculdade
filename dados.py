@@ -12,13 +12,14 @@ alunos = {}
 materias = {}
 
 
-def cadastrar_aluno(matricula, nome):
+def cadastrar_aluno(matricula, nome, nivel="Ensino Médio"):
     """
     Cadastra um novo aluno no sistema.
     Retorna (sucesso: bool, mensagem: str)
     """
     matricula = matricula.strip()
     nome = nome.strip()
+    nivel = nivel.strip()
     
     if not matricula or not nome:
         return False, "Matrícula e nome do aluno não podem ser vazios."
@@ -26,16 +27,19 @@ def cadastrar_aluno(matricula, nome):
     if matricula in alunos:
         return False, f"O aluno com matrícula '{matricula}' já está cadastrado."
         
-    # Salva o aluno como um dicionário simples
+    # Salva o aluno como um dicionário simples com suporte a nível, faltas e carga horária
     alunos[matricula] = {
         "matricula": matricula,
         "nome": nome,
-        "notas": {}  # Chave: codigo_materia -> Valor: lista de notas (floats/None)
+        "nivel": nivel,
+        "notas": {},    # Chave: codigo_materia -> Valor: lista de notas (floats/None)
+        "faltas": {},   # Chave: codigo_materia -> Valor: int (quantidade de faltas, padrão 0)
+        "aulas": {}     # Chave: codigo_materia -> Valor: int (total de aulas da disciplina)
     }
-    return True, f"Aluno '{nome}' cadastrado com sucesso!"
+    return True, f"Aluno '{nome}' cadastrado com sucesso no {nivel}!"
 
 
-def cadastrar_materia(codigo, nome, pesos):
+def cadastrar_materia(codigo, nome, pesos, total_aulas=40):
     """
     Cadastra uma nova matéria no sistema.
     Retorna (sucesso: bool, mensagem: str)
@@ -52,13 +56,33 @@ def cadastrar_materia(codigo, nome, pesos):
     if not pesos:
         return False, "A matéria precisa ter pelo menos uma avaliação/peso definido."
         
-    # Salva a matéria como um dicionário simples
+    if total_aulas <= 0:
+        return False, "O número total de aulas deve ser maior que zero."
+        
+    # Salva a matéria com a carga horária de aulas
     materias[codigo] = {
         "codigo": codigo,
         "nome": nome,
-        "pesos": pesos
+        "pesos": pesos,
+        "total_aulas": total_aulas
     }
     return True, f"Matéria '{nome}' cadastrada com sucesso!"
+
+
+def inicializar_aluno_materia(matricula, codigo_materia):
+    """
+    Inicializa as estruturas de notas, faltas e aulas para um aluno em uma matéria específica.
+    """
+    aluno = alunos[matricula]
+    materia = materias[codigo_materia]
+    num_avaliacoes = len(materia["pesos"])
+    
+    if codigo_materia not in aluno["notas"]:
+        aluno["notas"][codigo_materia] = [None] * num_avaliacoes
+    if codigo_materia not in aluno["faltas"]:
+        aluno["faltas"][codigo_materia] = 0
+    if codigo_materia not in aluno["aulas"]:
+        aluno["aulas"][codigo_materia] = materia["total_aulas"]
 
 
 def lancar_nota(matricula, codigo_materia, avaliacao_num, nota):
@@ -86,13 +110,45 @@ def lancar_nota(matricula, codigo_materia, avaliacao_num, nota):
     if nota < 0.0 or nota > 10.0:
         return False, "A nota deve estar entre 0.0 e 10.0."
         
-    # Inicializa a lista de notas com None se o aluno ainda não possuir notas nessa matéria
-    if codigo_materia not in aluno["notas"]:
-        aluno["notas"][codigo_materia] = [None] * num_avaliacoes
+    # Inicializa as estruturas se necessário
+    inicializar_aluno_materia(matricula, codigo_materia)
         
     # Lança a nota no índice correto (0 a N-1)
     aluno["notas"][codigo_materia][avaliacao_num - 1] = nota
     return True, f"Nota {nota} lançada para a Avaliação {avaliacao_num} da matéria {materia['nome']}."
+
+
+def lancar_faltas(matricula, codigo_materia, quantidade_faltas):
+    """
+    Registra a quantidade de faltas de um aluno em uma determinada matéria.
+    Retorna (sucesso: bool, mensagem: str)
+    """
+    matricula = matricula.strip()
+    codigo_materia = codigo_materia.upper().strip()
+    
+    if matricula not in alunos:
+        return False, "Aluno não encontrado no sistema."
+        
+    if codigo_materia not in materias:
+        return False, "Matéria não encontrada no sistema."
+        
+    aluno = alunos[matricula]
+    materia = materias[codigo_materia]
+    
+    # Inicializa as estruturas se necessário
+    inicializar_aluno_materia(matricula, codigo_materia)
+    
+    total_aulas = aluno["aulas"][codigo_materia]
+    
+    if quantidade_faltas < 0:
+        return False, "A quantidade de faltas não pode ser negativa."
+        
+    if quantidade_faltas > total_aulas:
+        return False, f"A quantidade de faltas ({quantidade_faltas}) não pode ser maior que o total de aulas ({total_aulas}) da matéria."
+        
+    aluno["faltas"][codigo_materia] = quantidade_faltas
+    return True, f"Total de {quantidade_faltas} faltas registrado para a matéria {materia['nome']}."
+
 
 
 def obter_aluno(matricula):

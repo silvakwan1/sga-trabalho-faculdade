@@ -18,26 +18,40 @@ O projeto é dividido em três módulos principais para manter a separação de 
 
 ## 🚀 Funcionalidades
 
-- **Cadastrar Aluno**: Permite registrar alunos com número de matrícula único e nome completo.
-- **Cadastrar Matéria**: Cria disciplinas com código identificador único, nome e número configurável de avaliações, cada uma contendo seu próprio peso acadêmico.
-- **Lançar Nota de Aluno**: Permite associar notas (de 0.0 a 10.0) a avaliações específicas de matérias em que o aluno está cursando.
-- **Exibir Boletim do Aluno**: Mostra as notas de cada avaliação e calcula automaticamente a **Média Ponderada Final** para todas as matérias. Caso alguma nota ainda não tenha sido cadastrada, o sistema exibe o status de avaliação como *Pendente* e calcula a média considerando apenas as notas já lançadas.
-- **Listar Alunos e Matérias**: Permite visualizar rapidamente todos os registros cadastrados no sistema.
+- **Cadastrar Aluno**: Permite registrar alunos do **Ensino Médio** com número de matrícula único e nome completo. Ao cadastrar, é sugerida a pré-vinculação automática das disciplinas básicas do Ensino Médio.
+- **Cadastrar Matéria**: Cria disciplinas com código identificador único, nome, número configurável de avaliações com seus respectivos pesos acadêmicos e a carga horária total de aulas.
+- **Lançar Nota de Aluno**: Associa notas (de 0.0 a 10.0) a avaliações específicas de matérias em que o aluno está cursando.
+- **Lançar Falta de Aluno**: Registra o total de faltas obtidas pelo estudante em uma disciplina específica (limitado à carga horária da matéria).
+- **Gerar Relatório Final do Aluno (LDB)**: Exibe o boletim acadêmico final contendo o nível de ensino, disciplinas cursadas, médias finais calculadas, total de faltas, percentual de frequência e situação final.
+- **Listar Alunos e Matérias**: Permite visualizar rapidamente todos os registros e configurações acadêmicas.
+
+---
+
+## ⚖️ Critérios de Avaliação LDB (Ensino Médio)
+
+Em conformidade com a Lei de Diretrizes e Bases da Educação Nacional (LDB nº 9.394/1996), o sistema classifica o estudante em um dos três estados possíveis:
+
+*   **Aprovado**: Média Final $\ge$ 6.0 e Frequência $\ge$ 75% em todas as disciplinas.
+*   **Reprovado por nota**: Média Final $<$ 6.0 e Frequência $\ge$ 75%.
+*   **Reprovado por falta**: Frequência $<$ 75%, independente da nota final.
 
 ---
 
 ## 🎲 Dados de Teste Pré-carregados
 
-Para facilitar a experimentação do sistema, o script já inicia com os seguintes registros simulados:
+O sistema já inicia pré-carregado com 3 alunos simulando cada uma das situações possíveis para facilitar os testes:
 
-- **Matérias**:
-  - `MAT` (Matemática) - 3 avaliações (Pesos: 3.0, 3.0 e 4.0)
-  - `PORT` (Português) - 2 avaliações (Pesos: 4.0 e 6.0)
-  - `GEO` (Geografia) - 2 avaliações (Pesos: 5.0 e 5.0)
-- **Alunos**:
-  - `Ana Silva` (Matrícula: `1010`)
-  - `Bruno Costa` (Matrícula: `2020`)
-- **Notas**: Lançamentos parciais para fins de teste.
+1.  **Ana Silva** (Matrícula: `1010`) $\rightarrow$ **Aprovado**
+    *   Matemática: Média 8.25 | Frequência 95% (4 faltas em 80 aulas)
+    *   Português: Média 7.90 | Frequência 92.5% (6 faltas em 80 aulas)
+    *   Geografia: Média 8.50 | Frequência 95% (2 faltas em 40 aulas)
+2.  **Bruno Costa** (Matrícula: `2020`) $\rightarrow$ **Reprovado por nota**
+    *   Matemática: Média 5.55 | Frequência 90% (8 faltas em 80 aulas)
+    *   Português: Média 7.70 | Frequência 87.5% (10 faltas em 80 aulas)
+    *   Geografia: Média 7.50 | Frequência 90% (4 faltas em 40 aulas)
+3.  **Carla Dias** (Matrícula: `3030`) $\rightarrow$ **Reprovado por falta**
+    *   Matemática: Média 8.50 | Frequência 68.75% (25 faltas em 80 aulas)
+    *   Português: Média 8.00 | Frequência 93.75% (5 faltas em 80 aulas)
 
 ---
 
@@ -55,19 +69,35 @@ python sga.py
 
 ---
 
-## 📝 Exemplo de Uso do Boletim
+## 📝 Exemplo de Relatório Acadêmico Final
 
-Ao selecionar a opção **4 (Exibir Boletim)** para a aluna **Ana Silva** (matrícula `1010`), o terminal exibirá:
+Ao selecionar a opção **5 (Gerar Relatório Final)** para a aluna **Ana Silva** (matrícula `1010`), o terminal exibirá:
 
 ```text
-Aluno: Ana Silva | Matrícula: 1010
---------------------------------------------------
-Matéria: Matemática (MAT)
-  Notas: Av1 (Peso 3.0): 8.0 | Av2 (Peso 3.0): 7.5 | Av3 (Peso 4.0): 9.0
-  Média Ponderada Final: 8.25
---------------------------------------------------
-Matéria: Português (PORT)
-  Notas: Av1 (Peso 4.0): 7.0 | Av2 (Peso 6.0): 8.5
-  Média Ponderada Final: 7.90
---------------------------------------------------
+=================================================================
+                 RELATÓRIO ACADÊMICO FINAL
+                 (DIRETRIZES LDB - 75% FREQ)
+=================================================================
+Aluno: ANA SILVA
+Matrícula: 1010
+Nível de Ensino: Ensino Médio
+-----------------------------------------------------------------
+Critérios: Nota Mínima: 6.0 | Frequência Mínima: 75%
+-----------------------------------------------------------------
+DISCIPLINA      | MÉDIA  | FALTAS   | FREQ %   | SITUAÇÃO            
+-----------------------------------------------------------------
+Matemática      | 8.25   | 4 /80    | 95.0 %   | Aprovado            
+Português       | 7.90   | 6 /80    | 92.5 %   | Aprovado            
+Geografia       | 8.50   | 2 /40    | 95.0 %   | Aprovado            
+-----------------------------------------------------------------
+RESUMO GERAL DO DESEMPENHO:
+  Média Geral das Disciplinas: 8.22
+  Total de Faltas Acumuladas: 12 faltas em 200 aulas
+  Frequência Geral do Aluno:  94.00%
+
+****************************************
+  SITUAÇÃO GERAL: APROVADO
+****************************************
+=================================================================
 ```
+
