@@ -1,0 +1,118 @@
+<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+<meta charset="utf-8">
+<title>Pitch de Apresentação - SGA</title>
+<!--[if gte mso 9]>
+<xml>
+<w:WordDocument>
+<w:View>Print</w:View>
+<w:Zoom>100</w:Zoom>
+</w:WordDocument>
+</xml>
+<![endif]-->
+<style>
+    body {
+        font-family: 'Calibri', 'Arial', sans-serif;
+        line-height: 1.6;
+        color: #333333;
+        margin: 2cm;
+    }
+    h1 {
+        color: #1a365d;
+        font-size: 22pt;
+        border-bottom: 2px solid #2b6cb0;
+        padding-bottom: 5px;
+        margin-top: 24pt;
+        margin-bottom: 12pt;
+    }
+    h2 {
+        color: #2b6cb0;
+        font-size: 16pt;
+        margin-top: 18pt;
+        margin-bottom: 8pt;
+    }
+    p {
+        font-size: 11pt;
+        margin-bottom: 12pt;
+        text-align: justify;
+    }
+    ul {
+        margin-bottom: 12pt;
+        padding-left: 20px;
+    }
+    li {
+        font-size: 11pt;
+        margin-bottom: 6pt;
+    }
+    .destaque {
+        background-color: #f7fafc;
+        border-left: 4px solid #3182ce;
+        padding: 12px;
+        margin: 15px 0;
+        font-style: italic;
+        color: #2c5282;
+    }
+    .rodape {
+        margin-top: 40pt;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 10px;
+        font-size: 9pt;
+        color: #718096;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+
+    <h1>SGA - Sistema de Gerenciamento Acadêmico Offline</h1>
+    <p><strong>Apresentação em Formato Pitch Acadêmico (Faculdade)</strong></p>
+
+    <div class="destaque">
+        "Levar a modernização da gestão escolar para onde a internet e a infraestrutura básica ainda não conseguiram chegar."
+    </div>
+
+    <h2>1. O Gancho (A Abertura)</h2>
+    <p>Imagine a rotina de um professor ou secretário escolar no interior do Brasil, especificamente em áreas rurais ou remotas. Após semanas de avaliações, eles precisam calcular manualmente a média ponderada de dezenas de alunos para várias matérias diferentes. Um erro de digitação na calculadora ou uma planilha de Excel corrompida pode significar horas de retrabalho. Além disso, a falta de internet estável impede o uso dos modernos sistemas escolares integrados na nuvem. Como resolvemos esse gargalo?</p>
+
+    <h2>2. O Problema Real</h2>
+    <p>Nas regiões remotas do Brasil, as escolas enfrentam barreiras severas de infraestrutura:</p>
+    <ul>
+        <li><strong>Falta de Conectividade:</strong> Sem internet móvel ou banda larga estável, sistemas escolares baseados na Web (SaaS) são totalmente inutilizados.</li>
+        <li><strong>Dependência do Papel:</strong> O controle de notas e frequências em cadernetas físicas gera lentidão no cálculo de notas e grande risco de perda de dados devido a desgaste físico ou acidentes.</li>
+        <li><strong>Fragilidade de Planilhas Eletrônicas locais:</strong> Planilhas comuns de Excel exigem computadores com pacotes Office instalados e são propensas a erros de fórmulas acidentais causados por usuários leigos.</li>
+        <li><strong>Hardware Defasado:</strong> Computadores disponíveis nessas escolas costumam ser antigos e com pouca memória RAM, incapazes de rodar sistemas corporativos pesados.</li>
+    </ul>
+
+    <h2>3. A Solução: SGA Offline</h2>
+    <p>O <strong>SGA (Sistema de Gerenciamento Acadêmico)</strong> foi desenvolvido para solucionar este cenário com simplicidade, leveza e eficiência.</p>
+    <ul>
+        <li><strong>100% Funcional Offline:</strong> Não consome dados de rede nem necessita de sinal de internet. Todo o processamento e armazenamento ocorrem de forma local e imediata.</li>
+        <li><strong>Extrema Leveza:</strong> O software roda via linha de comando (CLI) em Python e consome menos de 10 MB de memória RAM. Isso significa que ele funciona perfeitamente até mesmo em computadores fabricados há mais de 15 anos.</li>
+        <li><strong>Portabilidade Absoluta:</strong> Pode ser gravado e executado diretamente de um pendrive comum, sem necessidade de instalação complexa no computador do usuário.</li>
+        <li><strong>Sem Classes ou Dependências Complexas:</strong> Desenvolvido de forma modular e focado na manipulação direta de estruturas simples (dicionários e listas), o código é de fácil manutenção e adaptação por outros desenvolvedores.</li>
+    </ul>
+
+    <h2>4. Principais Diferenciais e Funcionalidades</h2>
+    <ul>
+        <li><strong>Pesos Flexíveis de Notas:</strong> Diferente de outros sistemas rígidos, o SGA permite cadastrar matérias com pesos diferentes para cada avaliação (exemplo: Prova 1 com peso 3.0 e Prova 2 com peso 7.0).</li>
+        <li><strong>Cálculo Automático de Média Ponderada:</strong> O sistema calcula médias instantaneamente e trata automaticamente avaliações pendentes, evitando que o professor precise preencher notas fictícias ou fazer cálculos complexos de cabeça.</li>
+        <li><strong>Interface de Menu Numérico:</strong> Operação guiada por teclado, rápida e que evita erros de navegação de mouse para quem tem pouca afinidade com computadores.</li>
+    </ul>
+
+    <h2>5. Impacto Esperado</h2>
+    <p>A implantação do SGA traz vantagens imediatas para a rotina pedagógica local:</p>
+    <ul>
+        <li><strong>Redução de Tempo Administrativo:</strong> Economia de até 80% do tempo gasto no fechamento de boletins e cálculo de médias finais de períodos letivos.</li>
+        <li><strong>Redução de Erros a Zero:</strong> Garantia matemática de que as médias ponderadas estarão perfeitamente exatas, evitando injustiças com os estudantes.</li>
+        <li><strong>Inclusão e Dignidade Tecnológica:</strong> Fornece uma ferramenta confiável de trabalho que valoriza a dedicação dos educadores em áreas isoladas.</li>
+    </ul>
+
+    <h2>6. Próximos Passos (Visão de Futuro)</h2>
+    <p>Para o futuro, a plataforma prevê a exportação de boletins individuais e relatórios de desempenho em formato CSV/TXT compatível com qualquer impressora simples local, além de rotinas simples de sincronização via pendrive para consolidar relatórios municipais.</p>
+
+    <div class="rodape">
+        Apresentação de Projeto Acadêmico | Curso de Tecnologia / Engenharia | SGA - Sistema de Gerenciamento Acadêmico
+    </div>
+
+</body>
+</html>
